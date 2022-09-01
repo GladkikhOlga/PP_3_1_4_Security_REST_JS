@@ -33,8 +33,9 @@
 
         <label for="roles">Role</label>
         <select name="roles" id="roles" multiple="multiple" size="2">
-                <option value="ROLE_USER">USER</option>
-                <option value="ROLE_ADMIN">ADMIN</option>
+                <div th:each="role : ${roles}">
+                        <option th:text="${role.getName()}" th:value="${role.getId()}"/>
+                </div>
         </select>
         <br>
         <br>

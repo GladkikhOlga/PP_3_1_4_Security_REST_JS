@@ -65,7 +65,7 @@ public class AdminController {
     }
 // НЕ РАБОТАЕТ
     @PatchMapping ("/edit/{id}")
-    public String updateUser(User user,@RequestParam("roles")Set<Role> roles) {
+    public String updateUser(@ModelAttribute("user")User user,@RequestParam("roles")Set<Role> roles) {
         user.setRoles(roles);
         userService.saveUser(user);
         return "redirect:/admin";
