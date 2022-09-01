@@ -19,7 +19,7 @@ public class User implements UserDetails {
     private Long id;
     @Column(name = "username")
     private String username;
-    @Column(name = "lastName")
+    @Column(name = "lastname")
     private  String lastName;
     @Column(name = "age")
     private byte age;
