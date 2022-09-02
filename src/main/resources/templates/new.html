@@ -45,9 +45,12 @@
 <!--                        </option>-->
 <!--                </div>-->
 <!--        </select>-->
-        <select multiple class="form-control" size="2" id="roles" name="roles" th:field="*{roles}">
-                <option th:each="role: ${listRoles}" th:text="${role}" th:value="${role}">
-                </option>
+<!--        <select multiple class="form-control" size="2" id="roles" name="roles" th:field="*{roles}">-->
+<!--                <option th:each="role: ${listRoles}" th:text="${role}" th:value="${role}">-->
+<!--                </option>-->
+<!--        </select>-->
+        <select multiple class="form-control" name="roles" size="2">
+                <option th:each="role : ${listRoles}" th:value="${role}" th:text="${role}"/>
         </select>
         <br>
         <br>
