@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -18,10 +19,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
    private final UserDao userDao;
+   private final RoleDao roleDao;
    final PasswordEncoder bCryptPasswordEncoder;
 
-   public UserServiceImpl(UserDao userDao, @Lazy PasswordEncoder bCryptPasswordEncoder) {
+   public UserServiceImpl(UserDao userDao, RoleDao roleDao, @Lazy PasswordEncoder bCryptPasswordEncoder) {
       this.userDao = userDao;
+      this.roleDao = roleDao;
       this.bCryptPasswordEncoder = bCryptPasswordEncoder;
    }
 
@@ -54,6 +57,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    public void updateUser(User user) {
       userDao.updateUser(user);
    }
+
+   @Override
+   public User createUser() {
+      User user = new User();
+      Role roleUser = roleDao.getRoleByName("ROLE_USER");
+//      user.setRoles(Collections.singleton(roleUser));
+      user.addRole(roleUser);
+      return user;
+   }
+
+
 
    @Override
    @Transactional(readOnly = true)

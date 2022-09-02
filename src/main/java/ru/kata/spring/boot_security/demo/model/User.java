@@ -6,9 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -34,8 +32,8 @@ public class User implements UserDetails {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn (name = "role_id")
 )
-    private Set<Role> roleSet;
-
+    //private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
     public User() {
     }
 
@@ -48,6 +46,9 @@ public class User implements UserDetails {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
     public void setUsername(String name) {
         this.username = name;
     }
@@ -81,17 +82,17 @@ public class User implements UserDetails {
     }
 
     public Set<Role> getRoles() {
-        return roleSet;
+        return roles;
     }
 
     public void setRoles(Set<Role> roles) {
-        this.roleSet = roles;
+        this.roles = roles;
     }
 
     @Transactional
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roleSet.stream()
+        return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }
@@ -146,8 +147,12 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
-                ", roleSet=" + roleSet +
+                ", roleSet=" + roles +
                 '}';
+    }
+
+    public void addRole(Role roleUser) {
+        this.roles.add(roleUser);
     }
 }
 

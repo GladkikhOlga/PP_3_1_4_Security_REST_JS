@@ -9,6 +9,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -37,15 +38,14 @@ public class AdminController {
     }
     //работает
     @GetMapping("/new")
-    public String createUserForm(@ModelAttribute("newUser") User user, Model model) {
-        model.addAttribute("roles", roleService.getAllRoles());
+    public String createUserForm(/*@ModelAttribute("newUser") User user,*/ Model model) {
+        model.addAttribute("newUser", userService.createUser());
+        model.addAttribute("listRoles", roleService.getAllRoles());
         return "/new";
     }
     // НЕ РАБОТАЕТ
     @PostMapping("/new")
-    public String createUser(@ModelAttribute("newUser") User user,
-                             @RequestParam("roles") Set<Role> roles) {
-        user.setRoles(roles);
+    public String createUser(@ModelAttribute("newUser") User user) {
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -59,14 +59,16 @@ public class AdminController {
 //работает
     @GetMapping("/edit/{id}")
     public String updateUserForm(@PathVariable("id")Long id, Model model) {
+        Set<Role> roles = roleService.getAllRoles();
         model.addAttribute("user",userService.getUserById(id));
-        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("roles", roles);
         return "/edit";
     }
 // НЕ РАБОТАЕТ
     @PatchMapping ("/edit/{id}")
-    public String updateUser(@ModelAttribute("user")User user,@RequestParam("roles")Set<Role> roles) {
-        user.setRoles(roles);
+//    public String updateUser(@ModelAttribute("user")User user,@RequestParam("roleSet")Set<Role> roles) {
+    public String updateUser(@ModelAttribute("user") User user) {
+//        user.setRoles(roles);
         userService.saveUser(user);
         return "redirect:/admin";
     }

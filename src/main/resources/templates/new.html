@@ -8,7 +8,7 @@
 </head>
 <body>
 <h2>Add User</h2>
-<form action="#" th:action="@{/admin/new}" th:object="${newUser}" method="post">
+<form th:action="@{/admin/new}" th:object="${newUser}" method="post">
         <label for="username">Username: </label>
         <input type="text" th:field="*{username}" id="username" placeholder="username">
         <br>
@@ -31,11 +31,23 @@
         <br>
         <br>
 
-        <label for="roles">Role</label>
-        <select name="roles" id="roles" multiple="multiple" size="2">
-                <div th:each="role : ${roles}">
-                        <option th:text="${role.getName()}" th:value="${role.getId()}"/>
-                </div>
+<!--        <label for="roles">Role</label>-->
+<!--        <select id="roles" multiple="multiple" size="2">-->
+<!--                <div th:each="role : ${listRoles}">-->
+<!--                        <option th:text="${role.name}" th:value="${role}" th:field="*{roles}">-->
+<!--                                -->
+<!--                        </option>-->
+<!--                </div>-->
+<!--                <div th:each="role : ${listRoles}">-->
+<!--                        <option th:text="${role.name}" th:value="${role.name}" th:field="*{roles}">-->
+<!--                        </option>-->
+<!--                        <option th:text="${role.id}" th:value="${role.id}" th:field="*{roles}">-->
+<!--                        </option>-->
+<!--                </div>-->
+<!--        </select>-->
+        <select multiple class="form-control" size="2" id="roles" name="roles" th:field="*{roles}">
+                <option th:each="role: ${listRoles}" th:text="${role}" th:value="${role}">
+                </option>
         </select>
         <br>
         <br>

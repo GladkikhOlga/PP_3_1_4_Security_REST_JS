@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.stereotype.Repository;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
@@ -37,6 +38,7 @@ public class UserDaoHiberImpl implements UserDao{
     public List<User> getAllUsers() {
         return entityManager.createQuery("from User", User.class).getResultList();
     }
+
 
     @Override
     public User getUserByUsername(String username) {
