@@ -30,6 +30,11 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
+    public Set<Role> getRolesByName(Set<Role> roles) {
+        return roleDao.getRolesByName(roles);
+    }
+
+    @Override
     public Set<Role> getAllRoles() {
         return roleDao.getAllRoles();
     }

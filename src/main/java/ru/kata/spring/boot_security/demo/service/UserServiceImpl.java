@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    @Override
    @Transactional
    public void updateUser(User user) {
+      user.setRoles(roleDao.getRolesByName(user.getRoles()));
       userDao.updateUser(user);
    }
 
@@ -61,7 +62,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    public User createUser() {
       User user = new User();
       Role roleUser = roleDao.getRoleByName("ROLE_USER");
-//      user.setRoles(Collections.singleton(roleUser));
       user.addRole(roleUser);
       return user;
    }

@@ -7,8 +7,7 @@
 <body>
 <h2>Modify User</h2>
 
-    <form th:method="PATCH" th:action="@{/admin/edit/{id} (id=${user.getId()})}" th:object="${user}">
-<!--    <form th:method="POST" th:action="@{/admin/edit}" th:object="${user}">-->
+    <form th:method="PUT" th:action="@{/admin/edit/{id} (id=${user.getId()})}" th:object="${user}">
         <label for="id">ID</label>
         <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
         <br/>
@@ -34,31 +33,10 @@
         <br/>
         <br>
         <br>
-        <label for="roles123">Role</label>
-            <select multiple class="form-control form-control-sm" size="2" id="roles123" th:name="roleSet">
-                <option th:each="role : ${roles}"
-                        th:name="*{roles}"
-                        th:text="${role.name}"
-                        th:value="${role.id}" class="m-2">
-                </option>
-            </select>
-<!--        <select name="roles" id="roles" multiple="multiple" size="2">-->
-<!--        <select class="form-control selectpicker" th:field="*{roles}" id="roles" multiple>-->
-
-<!--            <option th:each="role : ${roles}"-->
-<!--                    th:text="${role}"-->
-<!--                    th:value="${role}">role-->
-<!--            </option>-->
-<!--        </select>-->
-<!--        <label for="dips">Select dips</label>-->
-<!--        <select class="form-control selectpicker" th:field="*{dips}" id="dips" multiple>-->
-
-<!--            <option th:each="dip : ${T(com.frontbackend.thymeleaf.bootstrap.model.Dip).values()}"-->
-<!--                    th:value="${dip}"-->
-<!--                    th:text="${dip}">dip-->
-<!--            </option>-->
-
-<!--        </select>-->
+        <label for=roles>Role</label>
+        <select multiple class="form-control" name="roles" id="roles" size="2" th:field="*{roles}">
+            <option th:each="role : ${listRoles}" th:value="${role}" th:text="${role}"/>
+        </select>
 
         <br>
         <br/><br/>

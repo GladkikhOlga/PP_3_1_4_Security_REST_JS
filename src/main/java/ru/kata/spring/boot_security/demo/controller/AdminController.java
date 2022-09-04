@@ -39,7 +39,7 @@ public class AdminController {
     }
     //работает
     @GetMapping("/new")
-    public String createUserForm(/*@ModelAttribute("newUser") User user,*/ Model model) {
+    public String createUserForm(Model model) {
         model.addAttribute("newUser", userService.createUser());
         model.addAttribute("listRoles", roleService.getAllRoles());
         return "/new";
@@ -47,9 +47,9 @@ public class AdminController {
     // НЕ РАБОТАЕТ
     @PostMapping("/new")
     public String createUser(@ModelAttribute("newUser") User user, BindingResult bindingResult) {
-//        if(bindingResult.hasErrors()){
-//            System.out.println("Binderr");
-//        }
+        if(bindingResult.hasErrors()){
+            System.out.println("Binderr");
+        }
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -65,18 +65,18 @@ public class AdminController {
     public String updateUserForm(@PathVariable("id")Long id, Model model) {
         Set<Role> roles = roleService.getAllRoles();
         model.addAttribute("user",userService.getUserById(id));
-        model.addAttribute("roles", roles);
+        model.addAttribute("listRoles", roleService.getAllRoles());
         return "/edit";
     }
 // НЕ РАБОТАЕТ
-    @PatchMapping ("/edit/{id}")
-    public String updateUser(@ModelAttribute("user")User user,@RequestParam("roleSet")Set<Role> roles) {
+    @PutMapping ("/edit/{id}")
+    public String updateUser(@ModelAttribute("user")User user) {
 //    public String updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
 //        user.setRoles(roles);
 //        if(bindingResult.hasErrors()){
 //            System.out.println("Binderr");
 //        }
-        userService.saveUser(user);
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 }

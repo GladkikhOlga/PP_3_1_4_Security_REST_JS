@@ -11,6 +11,8 @@ public interface RoleService {
 
     Role getRoleByName(String name);
 
+    public Set<Role> getRolesByName(Set<Role> roles);
+
 
    Set<Role> getAllRoles();
 }
