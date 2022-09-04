@@ -26,7 +26,7 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
-@ManyToMany(fetch = FetchType.EAGER)
+@ManyToMany(cascade=CascadeType.REFRESH,fetch = FetchType.LAZY)
 @JoinTable (
         name = "Users_Roles",
         joinColumns = @JoinColumn(name = "user_id"),

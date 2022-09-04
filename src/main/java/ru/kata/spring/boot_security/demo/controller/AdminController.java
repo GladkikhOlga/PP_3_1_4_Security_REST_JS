@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -45,7 +46,10 @@ public class AdminController {
     }
     // НЕ РАБОТАЕТ
     @PostMapping("/new")
-    public String createUser(@ModelAttribute("newUser") User user) {
+    public String createUser(@ModelAttribute("newUser") User user, BindingResult bindingResult) {
+//        if(bindingResult.hasErrors()){
+//            System.out.println("Binderr");
+//        }
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -66,9 +70,12 @@ public class AdminController {
     }
 // НЕ РАБОТАЕТ
     @PatchMapping ("/edit/{id}")
-//    public String updateUser(@ModelAttribute("user")User user,@RequestParam("roleSet")Set<Role> roles) {
-    public String updateUser(@ModelAttribute("user") User user) {
+    public String updateUser(@ModelAttribute("user")User user,@RequestParam("roleSet")Set<Role> roles) {
+//    public String updateUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
 //        user.setRoles(roles);
+//        if(bindingResult.hasErrors()){
+//            System.out.println("Binderr");
+//        }
         userService.saveUser(user);
         return "redirect:/admin";
     }

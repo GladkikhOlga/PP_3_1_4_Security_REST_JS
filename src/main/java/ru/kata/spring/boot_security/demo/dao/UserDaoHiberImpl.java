@@ -42,7 +42,7 @@ public class UserDaoHiberImpl implements UserDao{
 
     @Override
     public User getUserByUsername(String username) {
-        return entityManager.createQuery("SELECT u FROM User u WHERE u.username= :username", User.class)
+        return entityManager.createQuery("SELECT u FROM User AS u JOIN FETCH u.roles WHERE u.username= :username", User.class)
                 .setParameter("username", username)
                 .getSingleResult();
     }
