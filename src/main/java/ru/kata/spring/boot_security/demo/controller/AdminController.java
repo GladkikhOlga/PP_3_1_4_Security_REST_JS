@@ -23,7 +23,7 @@ public class AdminController {
         this.userService = userService;
         this.roleService = roleService;
     }
-//работает
+
     @GetMapping("/admin")
     public String showAllUsers(Principal principal, Model model) {
         User user = userService.getUserByUsername(principal.getName());
@@ -33,7 +33,7 @@ public class AdminController {
         model.addAttribute("listRoles",roleService.getAllRoles());
         return "admin";
     }
-//работает
+
     @GetMapping("/admin/{id}")
     public String show(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
@@ -63,14 +63,13 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-//    @GetMapping("/edit/{id}")
+//    @GetMapping("/updateUser/{id}")
 //    public String updateUserForm(@PathVariable("id")Long id, Model model) {
 //        model.addAttribute("user",userService.getUserById(id));
 //        model.addAttribute("listRoles", roleService.getAllRoles());
 //        return "/edit";
 //    }
 
-    //НЕ РАБОТАЕТ
     @PutMapping ("/admin/updateUser/{id}")
     public String updateUser(@ModelAttribute("updateUser")User user) {
         userService.updateUser(user);

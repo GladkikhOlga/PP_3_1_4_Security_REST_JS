@@ -149,12 +149,12 @@
                                                                     </div>
                                                                 </fieldset>
                                                                 <div class="form-group text-center">
-                                                                    <label for="firstName"><strong>First
+                                                                    <label for="username"><strong>First
                                                                         name</strong></label>
                                                                     <input type="text" th:value="${UserInTable.username}"
-                                                                           name="firstName" required
+                                                                           name="username" required
                                                                            class="form-control form-control-sm"
-                                                                           id="firstName">
+                                                                           id="username">
                                                                 </div>
                                                                 <div class="form-group text-center">
                                                                     <label for="lastName"><strong>Last
@@ -181,7 +181,7 @@
                                                                 <div class="form-group text-center">
                                                                     <label for="password"><strong>Password</strong></label>
                                                                     <input type="password"
-                                                                           th:value="${UserInTable.password}"
+                                                                           th:value="${newUser.password}"
                                                                            name="password"
                                                                            class="form-control form-control-sm"
                                                                            id="password">
