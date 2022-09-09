@@ -31,10 +31,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    @Override
    @Transactional
    public void saveUser(User user) {
-      user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+      encodePassword(user);
       user.setRoles(roleDao.getRolesByName(user.getRoles()));
       userDao.saveUser(user);
    }
+
    @Override
    @Transactional
    public void removeUserById(long id) {
@@ -48,12 +49,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
    @Override
    public User getUserById(long id) {
-     return userDao.getUserById(id);
+      return userDao.getUserById(id);
    }
 
    @Override
    @Transactional
    public void updateUser(User user) {
+      encodePassword(user);
       user.setRoles(roleDao.getRolesByName(user.getRoles()));
       userDao.updateUser(user);
    }
@@ -66,8 +68,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
       return user;
    }
 
-
-
    @Override
    public User getUserByUsername(String username) {
       return userDao.getUserByUsername(username);
@@ -77,9 +77,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
    @Transactional
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
       User user = userDao.getUserByUsername(username);
-      if(user == null){
+      if (user == null) {
          throw new UsernameNotFoundException(String.format("User '%s' not found", username));
       }
       return user;
+   }
+
+   private void encodePassword(User user) {
+      if (user.getPassword().equals("")) {
+         user.setPassword(getUserById(user.getId()).getPassword());
+      } else {
+         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+      }
    }
 }
