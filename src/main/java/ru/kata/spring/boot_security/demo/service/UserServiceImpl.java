@@ -11,9 +11,10 @@ import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
 
-import java.util.Collections;
 import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -49,7 +50,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
    @Override
    public User getUserById(long id) {
-      return userDao.getUserById(id);
+      User user = userDao.getUserById(id);
+      if (user == null) {
+         throw new UserNotFoundException();
+      }
+      return user;
    }
 
    @Override
