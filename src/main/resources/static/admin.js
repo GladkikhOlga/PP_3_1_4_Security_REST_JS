@@ -124,6 +124,7 @@ function createNewUser() {
         .then(res => res.json())
         .then(data => {
             setTimeout(() => {
+                location.reload()
                 getTableUser(data)
             }, 250)
         })
