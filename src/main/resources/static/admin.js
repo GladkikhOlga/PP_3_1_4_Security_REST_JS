@@ -124,9 +124,10 @@ function createNewUser() {
         .then(res => res.json())
         .then(data => {
             setTimeout(() => {
-                location.reload()
                 getTableUser(data)
             }, 250)
+            $('.nav-tabs a[href="#userInTable"]').tab('show');
+            $('.nav-tabs a[href="#newUser"]').removeClass('active')
         })
 }
 
